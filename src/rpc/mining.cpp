@@ -460,7 +460,8 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
     if (strMode != "template")
         throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid mode");
 
-    if (vNodes.empty())
+    // Allow getblocktemlate for not connected regtest node
+    if (Params().NetworkIDString() != "regtest" && vNodes.empty())
         throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "Namecoin is not connected!");
 
     if (IsInitialBlockDownload())
